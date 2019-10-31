@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -11,7 +12,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-mongoose.connect("mongodb://localhost:27017/toListDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://new-user_0:new-user-Atlas@cluster0-0bwlj.mongodb.net/todolistDB", {useNewUrlParser: true});
 
 const itemSchema = {
     name: String,
@@ -36,11 +37,11 @@ const item3 = new Item({
 });
 
 function insertDefalutItems () {
-    Item.insertMany([fullStack, jap, algrothem], (err) => {
+    Item.insertMany([item1, item2, item3], (err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("successfully inserted")
+        console.log("successfully inserted");
     }
     });
 }
@@ -76,14 +77,14 @@ app.post("/", (req, res) => {
         let newItem = new Item({
             name: req.body.newItem,
             ger: "work"
-        })
+        });
         Item.insertMany([newItem]);
         res.redirect("/work");
     } else {
         let newItem = new Item({
             name: req.body.newItem,
             ger: "home"
-        })
+        });
         Item.insertMany([newItem]);
         res.redirect("/");
     }
@@ -105,6 +106,6 @@ app.get("/work", (req, res) => {
 
 app.get("/about", (req, res) => {
     res.render("about");
-})
+});
 
 app.listen("3000", _ => console.log("running on server 3000"));
